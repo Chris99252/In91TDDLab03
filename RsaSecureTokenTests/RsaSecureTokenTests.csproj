@@ -53,7 +53,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="AuthenticationServiceTests - function - parameter.cs" />
+    <Compile Include="AuthenticationServiceTests - protected - virtual - function.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

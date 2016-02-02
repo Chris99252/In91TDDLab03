@@ -39,7 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AuthenticationService - function - parameter.cs" />
+    <Compile Include="AuthenticationService - protected - virtual - function.cs" />
     <Compile Include="IProfileDao.cs" />
     <Compile Include="IRsaToken.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
