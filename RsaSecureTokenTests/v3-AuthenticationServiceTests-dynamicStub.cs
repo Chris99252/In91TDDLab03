@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using RsaSecureToken;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NSubstitute;
 
 namespace RsaSecureToken.Tests
 {
@@ -17,11 +18,18 @@ namespace RsaSecureToken.Tests
         [TestMethod()]
         public void IsValidTest()
         {
-            var target = new AuthenticationService();
+            //var stubProfile = new StubProfileDao();
+            IProfileDao stubProfile = Substitute.For<IProfileDao>();
+            stubProfile.GetPassword("joey").Returns("91");
+
+            //var stubToken = new StubTokenDao();
+            IRsaToken stubToken = Substitute.For<IRsaToken>();
+            stubToken.GetRandom("").ReturnsForAnyArgs("000000");
+
+            var target = new AuthenticationService(stubProfile, stubToken);
 
             var actual = target.IsValid("joey", "91000000");
 
-            //always failed
             Assert.IsTrue(actual);                       
         }
     }

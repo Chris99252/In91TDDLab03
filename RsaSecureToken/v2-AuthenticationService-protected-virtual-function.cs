@@ -37,41 +37,41 @@ namespace RsaSecureToken
 
             return profileDao;
         }
+    }
 
-        public class ProfileDao
+    public class ProfileDao
+    {
+        public virtual string GetPassword(string account)
         {
-            public virtual string GetPassword(string account)
-            {
-                var result = Context.GetPassword(account);
-                return result;
-            }
+            var result = Context.GetPassword(account);
+            return result;
+        }
+    }
+
+    public static class Context
+    {
+        public static Dictionary<string, string> profiles;
+
+        static Context()
+        {
+            profiles = new Dictionary<string, string>();
+            profiles.Add("joey", "91");
+            profiles.Add("mei", "99");
         }
 
-        public static class Context
+        public static string GetPassword(string key)
         {
-            public static Dictionary<string, string> profiles;
-
-            static Context()
-            {
-                profiles = new Dictionary<string, string>();
-                profiles.Add("joey", "91");
-                profiles.Add("mei", "99");
-            }
-
-            public static string GetPassword(string key)
-            {
-                return profiles[key];
-            }
+            return profiles[key];
         }
+    }
 
-        public class RsaTokenDao
+    public class RsaTokenDao
+    {
+        public virtual string GetRandom(string account)
         {
-            public virtual string GetRandom(string account)
-            {
-                var seed = new Random((int)DateTime.Now.Ticks & 0x0000FFFF);
-                var result = seed.Next(0, 999999);
-                return result.ToString("000000");
-            }
+            var seed = new Random((int)DateTime.Now.Ticks & 0x0000FFFF);
+            var result = seed.Next(0, 999999);
+            return result.ToString("000000");
         }
     }
 }

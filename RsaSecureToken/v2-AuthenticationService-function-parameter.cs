@@ -8,14 +8,12 @@ namespace RsaSecureToken
 {
     public class AuthenticationService
     {
-        public bool IsValid(string account, string password)
+        public bool IsValid(string account, string password, IProfileDao profile, IRsaToken rsaToken)
         {
             // 根據 account 取得自訂密碼
-            var profileDao = new ProfileDao();
-            var passwordFromDao = profileDao.GetPassword(account);
+            var passwordFromDao = profile.GetPassword(account);
 
             // 根據 account 取得 RSA token 目前的亂數
-            var rsaToken = new RsaTokenDao();
             var randomCode = rsaToken.GetRandom(account);
 
             // 驗證傳入的 password 是否等於自訂密碼 + RSA token亂數
@@ -25,7 +23,8 @@ namespace RsaSecureToken
         }
     }
 
-    public class ProfileDao
+
+    public class ProfileDao : IProfileDao
     {
         public string GetPassword(string account)
         {
@@ -51,7 +50,7 @@ namespace RsaSecureToken
         }
     }
 
-    public class RsaTokenDao
+    public class RsaTokenDao : IRsaToken
     {
         public string GetRandom(string account)
         {

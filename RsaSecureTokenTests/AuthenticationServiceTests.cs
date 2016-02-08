@@ -13,29 +13,12 @@ namespace RsaSecureToken.Tests
         [TestMethod()]
         public void IsValidTest()
         {
-            StubProfileDao stubProfile = new StubProfileDao();
-            StubRsaTokenDao stubRsaToken = new StubRsaTokenDao();
-            var target = new AuthenticationService(stubProfile, stubRsaToken);
+            var target = new AuthenticationService();
+
             var actual = target.IsValid("joey", "91000000");
 
             //always failed
             Assert.IsTrue(actual);
-        }
-    }
-
-    internal class StubProfileDao : IProfileDao
-    {
-        public string GetPassword(string account)
-        {
-            return "91";
-        }
-    }
-
-    internal class StubRsaTokenDao : IRsaToken
-    {
-        public string GetRandom(string account)
-        {
-            return "000000";
         }
     }
 }

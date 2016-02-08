@@ -6,26 +6,41 @@ using System.Threading.Tasks;
 
 namespace RsaSecureToken
 {
+    // step 1: 把profileDao型別改成IProfileDao介面, 把rsaToken型別改成IRsaTokenDao介面
+    // step 2: 新增一個AuthenticationService constructor, 讓外部可以傳入IProfileDao與IRsaTokenDao的instance
+    // step 3: IsValid() 改使用 field 的 profileDao 與 rsaToken
+    // step 4: 把IsValid() 內 new class 的動作移除。
+
     public class AuthenticationService
     {
+        private IProfileDao profileDao;
+        private IRsaToken rsaToken;
+
+        public AuthenticationService(IProfileDao profileDao, IRsaToken rsaToken)
+        {
+            this.profileDao = profileDao;
+            this.rsaToken = rsaToken;
+        }
+
         public bool IsValid(string account, string password)
         {
             // 根據 account 取得自訂密碼
-            var profileDao = new ProfileDao();
+            IProfileDao profileDao = this.profileDao;
             var passwordFromDao = profileDao.GetPassword(account);
 
             // 根據 account 取得 RSA token 目前的亂數
-            var rsaToken = new RsaTokenDao();
+            IRsaToken rsaToken = this.rsaToken;
             var randomCode = rsaToken.GetRandom(account);
 
             // 驗證傳入的 password 是否等於自訂密碼 + RSA token亂數
             var validPassword = passwordFromDao + randomCode;
             var isValid = password == validPassword;
+
             return isValid;
         }
     }
 
-    public class ProfileDao
+    public class ProfileDao : IProfileDao
     {
         public string GetPassword(string account)
         {
@@ -51,7 +66,7 @@ namespace RsaSecureToken
         }
     }
 
-    public class RsaTokenDao
+    public class RsaTokenDao : IRsaToken
     {
         public string GetRandom(string account)
         {

@@ -33,14 +33,15 @@ namespace RsaSecureToken.Tests
         }
     }
 
-    public class StubProfileDao : AuthenticationService.ProfileDao
+    public class StubProfileDao : ProfileDao
     {
         public override string GetPassword(string account)
         {
             return "91";
         }
     }
-    public class StubRsaTokenDao : AuthenticationService.RsaTokenDao
+
+    public class StubRsaTokenDao : RsaTokenDao
     {
         public override string GetRandom(string account)
         {

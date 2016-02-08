@@ -39,10 +39,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AuthenticationService - protected - virtual - function.cs" />
     <Compile Include="IProfileDao.cs" />
     <Compile Include="IRsaToken.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="v3-AuthenticationService-dynamicStub.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
